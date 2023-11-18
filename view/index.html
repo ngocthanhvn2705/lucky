@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thông tin điện thoại</title>
+</head>
+<body>
+    <h1>Thông tin điện thoại</h1>
+
+    <div id="phone-list">
+        <!-- Thông tin điện thoại sẽ được hiển thị ở đây -->
+    </div>
+
+    <script>
+        fetch('../api/phone/read.php',{
+            method: 'GET'
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.data) {
+                    var phoneList = document.getElementById("phone-list");
+
+                    data.data.forEach(function (phone) {
+                        var phoneDiv = document.createElement("div");
+                        phoneDiv.innerHTML = `
+                            <h2>${phone.name}</h2>
+                            <p>Price: ${phone.name}</p>
+                            <p>Price: ${phone.price}</p>
+                            <p>Description: ${phone.description}</p>
+                            <p>Category: ${phone.category}</p>
+                            <p>Brand: ${phone.brand}</p>
+                            <p>Pre discount: ${phone.pre_discount}</p>
+                            <p>Discount percent: ${phone.discount_percent}</p>
+                            <img src="data:image/jpeg;base64, ${phone.image}" alt="${phone.name}"/>
+                            <p>Discount percent: ${phone.color}</p>
+                        `;
+                        phoneList.appendChild(phoneDiv);
+                    });
+                }
+            })
+            .catch(error => console.error('Lỗi: ' + error));
+    </script>
+</body>
+</html>
